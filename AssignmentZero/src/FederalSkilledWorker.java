@@ -33,12 +33,14 @@ public class FederalSkilledWorker {
 	
 	
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
+		
 //	  public static final File CONFIG_FILE = new File("I can't see the path");  What is this?
 
 		String fileName;
 		String line;
 		String[] worker;
+		
+		int totalEducationPoints;
 		
 		Scanner keyboard= new Scanner(System.in);
 		
@@ -52,7 +54,7 @@ public class FederalSkilledWorker {
 		FileReader filereader= new FileReader(file);
 		BufferedReader bufferedreader= new BufferedReader(filereader);
 		
-		//read the first and second line to skip the category section
+		//reads the first and second line to skip the category section
 		line= bufferedreader.readLine();
 		line= bufferedreader.readLine();
 		
@@ -64,7 +66,8 @@ public class FederalSkilledWorker {
 			//place getFunctions here
 			// for the input for the other functions, use (worker[X_INDEX]) for example System.out.println(worker[X_INDEX]);
 			
-			
+			totalEducationPoints= getEducationPts(worker[SPEAK_1_INDEX], worker[LISTEN_1_INDEX], worker[READ_1_INDEX], worker[WRITE_1_INDEX], worker[ALL_2_INDEX]);
+			System.out.println(totalEducationPoints); //temporary test 
 			
 			line= bufferedreader.readLine();
 			
@@ -73,15 +76,75 @@ public class FederalSkilledWorker {
 		
 		bufferedreader.close();
 		
-		
-		
-		
-		
-		
-		
-		
-			
+	
 	}
+	
+	//IDK if these variable are needed but if it is then will put on top probably
+	static final int CLB_9_PLUS = 9;
+	static final int CLB_8 = 8;
+	static final int CLB_7 = 7;
+	
+	static int getEducationPts(String speak, String listen, String read, String write, String all) {
+		
+		int points = 0;
+		
+		//speak section
+		int speakInt= Integer.parseInt(speak);
+		
+		if (speakInt >= CLB_9_PLUS) {
+			points += 6;
+		} else if( speakInt == CLB_8) {
+			points += 5;
+		} else if( speakInt == CLB_7) {
+			points += 4;
+		}
+		
+		//listen section
+		int listenInt= Integer.parseInt(listen);
+		
+		if (listenInt >= CLB_9_PLUS) {
+			points += 6;
+		} else if( listenInt == CLB_8) {
+			points += 5;
+		} else if( listenInt == CLB_7) {
+			points += 4;
+		}
+		
+		//read section
+		int readInt= Integer.parseInt(read);
+		
+		if (readInt >= CLB_9_PLUS) {
+			points += 6;
+		} else if( readInt == CLB_8) {
+			points += 5;
+		} else if( readInt == CLB_7) {
+			points += 4;
+		}
+		
+		//write section
+		int writeInt= Integer.parseInt(write);
+		
+		if (writeInt >= CLB_9_PLUS) {
+			points += 6;
+		} else if( writeInt == CLB_8) {
+			points += 5;
+		} else if( writeInt == CLB_7) {
+			points += 4;
+		}
+		
+		//second language section
+		//https://www.w3schools.com/java/ref_string_equals.asp 
+		System.out.println(all);
+		if (all.equals("yes")) {
+			points += 4;
+		} else if( all.equals("no")) {
+			points += 0;
+		}
+		
+		return points;
+	}
+	
+	
 
 }
 
