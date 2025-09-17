@@ -4,7 +4,7 @@ public class FederalSkilledWorker {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		
+	  public static final File CONFIG_FILE = new File("I can't see the path");
 		//omg test
 		//test twooooooooooooooo poo
 		String fileName;
@@ -45,3 +45,4 @@ public class FederalSkilledWorker {
 	}
 
 }
+
