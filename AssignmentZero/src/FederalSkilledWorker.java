@@ -40,7 +40,8 @@ public class FederalSkilledWorker {
 		String line;
 		String[] worker;
 		
-		int totalEducationPoints;
+		int totalLangPoints;
+		int totalEducationPts;
 		
 		Scanner keyboard= new Scanner(System.in);
 		
@@ -66,8 +67,11 @@ public class FederalSkilledWorker {
 			//place getFunctions here
 			// for the input for the other functions, use (worker[X_INDEX]) for example System.out.println(worker[X_INDEX]);
 			
-			totalEducationPoints= getEducationPts(worker[SPEAK_1_INDEX], worker[LISTEN_1_INDEX], worker[READ_1_INDEX], worker[WRITE_1_INDEX], worker[ALL_2_INDEX]);
-			System.out.println(totalEducationPoints); //temporary test 
+			totalLangPoints= getLangPts(worker[SPEAK_1_INDEX], worker[LISTEN_1_INDEX], worker[READ_1_INDEX], worker[WRITE_1_INDEX], worker[ALL_2_INDEX]);
+			System.out.println(totalLangPoints); //temporary test 
+			
+			totalEducationPts = getEducationPts(worker[EDUCATION_INDEX]);
+			System.out.println(totalEducationPts);
 			
 			line= bufferedreader.readLine();
 			
@@ -84,7 +88,7 @@ public class FederalSkilledWorker {
 	static final int CLB_8 = 8;
 	static final int CLB_7 = 7;
 	
-	static int getEducationPts(String speak, String listen, String read, String write, String all) {
+	static int getLangPts(String speak, String listen, String read, String write, String all) {
 		
 		int points = 0;
 		
@@ -142,6 +146,32 @@ public class FederalSkilledWorker {
 		}
 		
 		return points;
+	}
+	
+	static int getEducationPts(String education) {
+		System.out.println(education);
+		
+		int points = 0;
+		if (education.equals("Secondary school (high school diploma)")) {
+			points += 5;
+		} else if(education.equals("One-year degree, diploma or certificate")) {
+			points += 15;
+		} else if(education.equals("Two-year degree, diploma or certificate")) {
+			points += 19;
+		} else if(education.equals("Bachelor's degree or other programs (three or more years)")) {
+			points += 21;
+		} else if(education.equals("Two or more certificates, diplomas, or degrees")) {
+			points += 22;
+		} else if(education.equals("Professional degree needed to practice in a licensed profession")) {
+			points += 23;
+		} else if(education.equals("University degree at the Master's level")) {
+			points += 23;
+		} else if(education.equals("University degree at the Doctoral (PhD) level")) {
+			points += 25;
+		} 
+			
+		return points;
+		
 	}
 	
 	
