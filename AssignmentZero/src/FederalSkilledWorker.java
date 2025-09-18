@@ -34,7 +34,7 @@ public class FederalSkilledWorker {
 	
 	public static void main(String[] args) throws IOException {
 		
-//	  public static final FILEPATH = ("dataTextFile/dataset-full.txt");  What is this?
+		public static final String FILEPATH = ("dataTextFile/dataset-full.txt");  
 
 		String fileName;
 		String line;
@@ -46,13 +46,13 @@ public class FederalSkilledWorker {
 		Scanner keyboard= new Scanner(System.in);
 		
 
-		public read {
+		static read {
 		//For reading file//
 		
 		System.out.println("What is your file name: ");
 		fileName = keyboard.nextLine();
 		
-		File file= new File( CONFIG_FILE + fileName );
+		File file= new File( FILEPATH + fileName );
 		FileReader filereader= new FileReader(file);
 		BufferedReader bufferedreader= new BufferedReader(filereader);
 		
@@ -179,7 +179,7 @@ public class FederalSkilledWorker {
 
 }
 
-
+}
 
 
 
