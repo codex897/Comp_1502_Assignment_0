@@ -89,7 +89,7 @@ public class FederalSkilledWorker {
 	static final int CLB_8 = 8;
 	static final int CLB_7 = 7;
 	
-	static int getLangPts(String speak, String listen, String read, String write, String all) {
+	public int getLangPts(String speak, String listen, String read, String write, String all) {
 		
 		int points = 0;
 		
@@ -178,6 +178,7 @@ public class FederalSkilledWorker {
 	
 
 }
+
 
 
 
