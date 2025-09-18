@@ -34,7 +34,7 @@ public class FederalSkilledWorker {
 	
 	public static void main(String[] args) throws IOException {
 		
-//	  public static final File CONFIG_FILE = new File("I can't see the path");  What is this?
+//	  public static final File CONFIG_FILE = new File("dataTextFile/dataset-full.txt");  What is this?
 
 		String fileName;
 		String line;
@@ -51,7 +51,7 @@ public class FederalSkilledWorker {
 		System.out.println("What is your file name: ");
 		fileName = keyboard.nextLine();
 		
-		File file= new File("dataTextFile/" + fileName );
+		File file= new File( CONFIG_FILE + fileName );
 		FileReader filereader= new FileReader(file);
 		BufferedReader bufferedreader= new BufferedReader(filereader);
 		
@@ -177,4 +177,5 @@ public class FederalSkilledWorker {
 	
 
 }
+
 
