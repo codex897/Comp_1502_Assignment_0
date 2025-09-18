@@ -34,7 +34,7 @@ public class FederalSkilledWorker {
 	
 	public static void main(String[] args) throws IOException {
 		
-//	  public static final File CONFIG_FILE = new File("dataTextFile/dataset-full.txt");  What is this?
+//	  public static final FILEPATH = ("dataTextFile/dataset-full.txt");  What is this?
 
 		String fileName;
 		String line;
@@ -89,7 +89,7 @@ public class FederalSkilledWorker {
 	static final int CLB_8 = 8;
 	static final int CLB_7 = 7;
 	
-	public int getLangPts(String speak, String listen, String read, String write, String all) {
+	static int getLangPts(String speak, String listen, String read, String write, String all) {
 		
 		int points = 0;
 		
@@ -178,6 +178,7 @@ public class FederalSkilledWorker {
 	
 
 }
+
 
 
 
