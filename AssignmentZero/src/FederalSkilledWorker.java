@@ -45,7 +45,8 @@ public class FederalSkilledWorker {
 		
 		Scanner keyboard= new Scanner(System.in);
 		
-		
+
+		public read {
 		//For reading file//
 		
 		System.out.println("What is your file name: ");
@@ -75,7 +76,7 @@ public class FederalSkilledWorker {
 			
 			line= bufferedreader.readLine();
 			
-			
+		
 		}
 		
 		bufferedreader.close();
@@ -177,5 +178,6 @@ public class FederalSkilledWorker {
 	
 
 }
+
 
 
