@@ -276,7 +276,42 @@ public class FederalSkilledWorker {
 	}
 	
 	
-	
+	static int getAgePts(String ageStr) {
+	    int age = Integer.parseInt(ageStr);
+
+	    int points = 0;
+
+	    if (age >= 18 && age <= 35) {
+	        points = 12;  
+	    } else if (age == 36) {
+	        points = 11;
+	    } else if (age == 37) {
+	        points = 10;
+	    } else if (age == 38) {
+	        points = 9;
+	    } else if (age == 39) {
+	        points = 8;
+	    } else if (age == 40) {
+	        points = 7;
+	    } else if (age == 41) {
+	        points = 6;
+	    } else if (age == 42) {
+	        points = 5;
+	    } else if (age == 43) {
+	        points = 4;
+	    } else if (age == 44) {
+	        points = 3;
+	    } else if (age == 45) {
+	        points = 2;
+	    } else if (age == 46) {
+	        points = 1;
+	    } else {
+	        points = 0;  
+	    }
+
+	    return points;
+	}
+
 	
 
 }
