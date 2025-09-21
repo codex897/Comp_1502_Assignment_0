@@ -45,7 +45,7 @@ public class FederalSkilledWorker {
 		int totalWorkExpPts;
 		int totalArrangedEmpPts;
 		int totalAgePts;
-		//String totalAdaptPoints;
+		int totalAdaptPoints;
 		
 		Scanner keyboard= new Scanner(System.in);
 		
@@ -80,8 +80,8 @@ public class FederalSkilledWorker {
 			totalLangPoints= getLangPts(worker[SPEAK_1_INDEX], worker[LISTEN_1_INDEX], worker[READ_1_INDEX], worker[WRITE_1_INDEX], worker[ALL_2_INDEX]);
 			System.out.println(totalLangPoints); //temporary test 
 			
-			/*totalAdaptPoints= getAdaptibilityPts(worker[ADAPTABILITY_SPOUSE_LANGUAGE_INDEX], worker[ADAPTABILITY_SPOUSE_EDUCATION_INDEX], worker[ADAPTABILITY_SPOUSE_WORK_INDEX], worker[ADAPTABILITY_YOU_EDUCATION_INDEX], worker[ADAPTABILITY_YOU_WORK_INDEX], worker[ADAPTABILITY_YOU_EMPLOYMENT_INDEX], worker[ADAPTABILITY_RELATIVE_INDEX]);
-			System.out.println(totalAdaptPoints); //temporary test */
+			totalAdaptPoints= getAdaptibilityPts(worker[ADAPTABILITY_SPOUSE_LANGUAGE_INDEX], worker[ADAPTABILITY_SPOUSE_EDUCATION_INDEX], worker[ADAPTABILITY_SPOUSE_WORK_INDEX], worker[ADAPTABILITY_YOU_EDUCATION_INDEX], worker[ADAPTABILITY_YOU_WORK_INDEX], worker[ADAPTABILITY_YOU_EMPLOYMENT_INDEX], worker[ADAPTABILITY_RELATIVE_INDEX]);
+			System.out.println(totalAdaptPoints); //temporary test 
 			
 			
 			totalEducationPts = getEducationPts(worker[EDUCATION_INDEX]);
@@ -322,16 +322,15 @@ public class FederalSkilledWorker {
 	    return points;
 	}
 	
-	static int getAdaptibilityPts(String adaptability) {		
+	static int getAdaptibilityPts(String spouseLanguage, String spouseStudies, String spouseWork, String yourStudies,String yourWork) {		
 
-		        Scanner scanner = new Scanner(System.in);
+		        
 		        int totalPoints = 0;
 
 		        System.out.println("--- Canadian Immigration Point Calculator ---");
 		        System.out.println("Please answer the following questions with 'yes' or 'no'.\n");
 
 		        System.out.println("Has your spouse or common-law partner achieved the minimum language standard? (yes/no)");
-		        String spouseLanguage = scanner.nextLine();
 		        switch (spouseLanguage.toLowerCase()) {
 		            case "yes":
 		                totalPoints += 5;
@@ -341,7 +340,7 @@ public class FederalSkilledWorker {
 
 		       
 		        System.out.print("Has your spouse or common-law partner completed at least 2 years of full-time study in Canada? (yes/no)");
-		        String spouseStudies = scanner.nextLine();
+		   
 		        switch (spouseStudies.toLowerCase()) {
 		            case "yes":
 		                totalPoints += 5;
@@ -352,7 +351,6 @@ public class FederalSkilledWorker {
 
 		       
 		        System.out.println("\nHas your spouse or common-law partner done at least 1 year of full-time work in Canada? (yes/no)");
-		        String spouseWork = scanner.nextLine();
 		        switch (spouseWork.toLowerCase()) {
 		            case "yes":
 		                totalPoints += 5;
@@ -363,7 +361,6 @@ public class FederalSkilledWorker {
 
 		        
 		        System.out.println("\nHave you completed at least 2 years of full-time study in Canada? (yes/no)");
-		        String yourStudies = scanner.nextLine();
 		        switch (yourStudies.toLowerCase()) {
 		            case "yes":
 		                totalPoints += 5;
@@ -374,7 +371,6 @@ public class FederalSkilledWorker {
 
 		   
 		        System.out.println("\nHave you done at least 1 year of full-time work in Canada? (yes/no)");
-		        String yourWork = scanner.nextLine();
 		        switch (yourWork.toLowerCase()) {
 		            case "yes":
 		                totalPoints += 10;
@@ -386,7 +382,6 @@ public class FederalSkilledWorker {
 		        System.out.println("\n-------------------------------------");
 		        System.out.println("Your total points for these factors are: " + totalPoints);
 
-		        scanner.close();
 		        return totalPoints;
 		    }
 	
