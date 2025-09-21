@@ -30,11 +30,11 @@ public class FederalSkilledWorker {
 	
 	static final int ADAPTABILITY_RELATIVE_INDEX = 18;
 	
-	
+	static final String FILEPATH = ("dataTextFile/");  
 	
 	public static void main(String[] args) throws IOException {
 		
-		public static final String FILEPATH = ("dataTextFile/dataset-full.txt");  
+		
 
 		String fileName;
 		String line;
@@ -42,11 +42,13 @@ public class FederalSkilledWorker {
 		
 		int totalLangPoints;
 		int totalEducationPts;
+		int totalWorkExpPts;
+		int totalArrangedEmpPts;
 		
 		Scanner keyboard= new Scanner(System.in);
 		
 
-		static read {
+
 		//For reading file//
 		
 		System.out.println("What is your file name: ");
@@ -60,6 +62,11 @@ public class FederalSkilledWorker {
 		line= bufferedreader.readLine();
 		line= bufferedreader.readLine();
 		
+		//output file
+		FileWriter fileWriter = new FileWriter(FILEPATH +"output/qualified-applicants-full.txt");
+		PrintWriter outputfile = new PrintWriter(fileWriter);
+		outputfile.println(String.format("%-21s|%-21s|%5s|%5s", "First Name", "Last Name", "Age", "Score"));
+		outputfile.println(String.format("%-21s+%-21s+%5s+%5s", "---------------------", "---------------------", "-----", "-----"));
 		
 		while(line != null) {
 			
@@ -74,14 +81,26 @@ public class FederalSkilledWorker {
 			totalEducationPts = getEducationPts(worker[EDUCATION_INDEX]);
 			System.out.println(totalEducationPts);
 			
+			totalWorkExpPts = getWorkExpPts(worker[WORK_EXPERIENCE_INDEX]);
+			System.out.println("Work exp points: " + totalWorkExpPts);
+
+			totalArrangedEmpPts= getArrangedEmpPts(worker[ARRANGED_EMPLOYMENT_INDEX]);
+			System.out.println("arrangedEmp points: " + totalArrangedEmpPts);
+		
+			outputfile.println(String.format("%-21s %-21s %5s", worker[FIRST_NAME_INDEX], worker[LAST_NAME_INDEX], worker[AGE_INDEX]));
+			
+			
 			line= bufferedreader.readLine();
 			
 		
 		}
 		
 		bufferedreader.close();
-		
+		outputfile.close();
 	
+		
+		
+		
 	}
 	
 	//IDK if these variable are needed but if it is then will put on top probably
@@ -149,37 +168,120 @@ public class FederalSkilledWorker {
 		return points;
 	}
 	
+//	static int getEducationPts(String education) {
+//		System.out.println(education);
+//		
+//		int points = 0;
+//		if (education.equals("Secondary school (high school diploma)")) {
+//			points += 5;
+//		} else if(education.equals("One-year degree, diploma or certificate")) {
+//			points += 15;
+//		} else if(education.equals("Two-year degree, diploma or certificate")) {
+//			points += 19;
+//		} else if(education.equals("Bachelor's degree or other programs (three or more years)")) {
+//			points += 21;
+//		} else if(education.equals("Two or more certificates, diplomas, or degrees")) {
+//			points += 22;
+//		} else if(education.equals("Professional degree needed to practice in a licensed profession")) {
+//			points += 23;
+//		} else if(education.equals("University degree at the Master's level")) {
+//			points += 23;
+//		} else if(education.equals("University degree at the Doctoral (PhD) level")) {
+//			points += 25;
+//		} 
+//			
+//		return points;
+//		
+//	}
+	
 	static int getEducationPts(String education) {
 		System.out.println(education);
-		
 		int points = 0;
-		if (education.equals("Secondary school (high school diploma)")) {
+		switch(education) {
+		case "Secondary school (high school diploma)":
 			points += 5;
-		} else if(education.equals("One-year degree, diploma or certificate")) {
+			break;
+		case "One-year degree, diploma or certificate":
 			points += 15;
-		} else if(education.equals("Two-year degree, diploma or certificate")) {
+			break;
+		case "Two-year degree, diploma or certificate":
 			points += 19;
-		} else if(education.equals("Bachelor's degree or other programs (three or more years)")) {
+			break;
+		case "Bachelor's degree or other programs (three or more years)":
 			points += 21;
-		} else if(education.equals("Two or more certificates, diplomas, or degrees")) {
+			break;
+		case "Two or more certificates, diplomas, or degrees":
 			points += 22;
-		} else if(education.equals("Professional degree needed to practice in a licensed profession")) {
+			break;
+		case "Professional degree needed to practice in a licensed profession":
 			points += 23;
-		} else if(education.equals("University degree at the Master's level")) {
+			break;
+		case "University degree at the Master's level":
 			points += 23;
-		} else if(education.equals("University degree at the Doctoral (PhD) level")) {
+			break;
+		case "University degree at the Doctoral (PhD) level":
 			points += 25;
-		} 
-			
+			break;
+		default:
+			points += 0;
+			break;
+		}
 		return points;
+	}
+	
+	static int getWorkExpPts(String workExpYears) {
+		int points = 0;
+		int workExpInt= Integer.parseInt(workExpYears);
 		
+		
+		if (workExpInt >= 6) {
+			points += 15;
+		} else if (workExpInt >= 4) {
+			points += 13;
+		} else if (workExpInt >= 2) {
+			points += 11;
+			
+		} else if (workExpInt == 1) {
+			points += 9;
+			
+		}else if (workExpInt < 1) {
+			points += 0;			
+		}
+		
+		return points;
+	}
+	
+//	static int getArrangedEmpPts(String YesNoArrangedEmp) {
+//		int points = 0;
+//		
+//		if (YesNoArrangedEmp.equals("yes")) {
+//			points += 10;
+//		} else {
+//			points += 0;
+//		}
+//		return points;
+//	}
+	
+	static int getArrangedEmpPts(String yesNoArrangedEmp) {
+		int points = 0;
+		switch(yesNoArrangedEmp) {
+		case "yes":
+			points += 10;
+			break;
+		default:
+			points += 0;
+			break;
+		}
+		return points;
 	}
 	
 	
+	
+	
 
 }
 
-}
+
 
 
 
