@@ -44,6 +44,7 @@ public class FederalSkilledWorker {
 		int totalEducationPts;
 		int totalWorkExpPts;
 		int totalArrangedEmpPts;
+		int totalAgePts;
 		
 		Scanner keyboard= new Scanner(System.in);
 		
@@ -80,6 +81,10 @@ public class FederalSkilledWorker {
 			
 			totalEducationPts = getEducationPts(worker[EDUCATION_INDEX]);
 			System.out.println(totalEducationPts);
+			
+			totalAgePts = getAgePts(worker[AGE_INDEX]);
+			System.out.println(totalAgePts);
+
 			
 			totalWorkExpPts = getWorkExpPts(worker[WORK_EXPERIENCE_INDEX]);
 			System.out.println("Work exp points: " + totalWorkExpPts);
@@ -310,6 +315,41 @@ public class FederalSkilledWorker {
 	    }
 
 	    return points;
+	}
+	
+	static int getAdaptibilityPts(String adaptability) {
+		System.out.println(adaptability);
+		int points = 0;
+		switch(adaptability) {
+		case "Secondary school (high school diploma)":
+			points += 5;
+			break;
+		case "One-year degree, diploma or certificate":
+			points += 15;
+			break;
+		case "Two-year degree, diploma or certificate":
+			points += 19;
+			break;
+		case "Bachelor's degree or other programs (three or more years)":
+			points += 21;
+			break;
+		case "Two or more certificates, diplomas, or degrees":
+			points += 22;
+			break;
+		case "Professional degree needed to practice in a licensed profession":
+			points += 23;
+			break;
+		case "University degree at the Master's level":
+			points += 23;
+			break;
+		case "University degree at the Doctoral (PhD) level":
+			points += 25;
+			break;
+		default:
+			points += 0;
+			break;
+		}
+		return points;
 	}
 
 	
