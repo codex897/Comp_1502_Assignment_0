@@ -45,6 +45,7 @@ public class FederalSkilledWorker {
 		int totalWorkExpPts;
 		int totalArrangedEmpPts;
 		int totalAgePts;
+		//String totalAdaptPoints;
 		
 		Scanner keyboard= new Scanner(System.in);
 		
@@ -78,6 +79,10 @@ public class FederalSkilledWorker {
 			
 			totalLangPoints= getLangPts(worker[SPEAK_1_INDEX], worker[LISTEN_1_INDEX], worker[READ_1_INDEX], worker[WRITE_1_INDEX], worker[ALL_2_INDEX]);
 			System.out.println(totalLangPoints); //temporary test 
+			
+			/*totalAdaptPoints= getAdaptibilityPts(worker[ADAPTABILITY_SPOUSE_LANGUAGE_INDEX], worker[ADAPTABILITY_SPOUSE_EDUCATION_INDEX], worker[ADAPTABILITY_SPOUSE_WORK_INDEX], worker[ADAPTABILITY_YOU_EDUCATION_INDEX], worker[ADAPTABILITY_YOU_WORK_INDEX], worker[ADAPTABILITY_YOU_EMPLOYMENT_INDEX], worker[ADAPTABILITY_RELATIVE_INDEX]);
+			System.out.println(totalAdaptPoints); //temporary test */
+			
 			
 			totalEducationPts = getEducationPts(worker[EDUCATION_INDEX]);
 			System.out.println(totalEducationPts);
@@ -317,44 +322,81 @@ public class FederalSkilledWorker {
 	    return points;
 	}
 	
-	static int getAdaptibilityPts(String adaptability) {
-		System.out.println(adaptability);
-		int points = 0;
-		switch(adaptability) {
-		case "Secondary school (high school diploma)":
-			points += 5;
-			break;
-		case "One-year degree, diploma or certificate":
-			points += 15;
-			break;
-		case "Two-year degree, diploma or certificate":
-			points += 19;
-			break;
-		case "Bachelor's degree or other programs (three or more years)":
-			points += 21;
-			break;
-		case "Two or more certificates, diplomas, or degrees":
-			points += 22;
-			break;
-		case "Professional degree needed to practice in a licensed profession":
-			points += 23;
-			break;
-		case "University degree at the Master's level":
-			points += 23;
-			break;
-		case "University degree at the Doctoral (PhD) level":
-			points += 25;
-			break;
-		default:
-			points += 0;
-			break;
+	static int getAdaptibilityPts(String adaptability) {		
+
+		        Scanner scanner = new Scanner(System.in);
+		        int totalPoints = 0;
+
+		        System.out.println("--- Canadian Immigration Point Calculator ---");
+		        System.out.println("Please answer the following questions with 'yes' or 'no'.\n");
+
+		        System.out.println("Has your spouse or common-law partner achieved the minimum language standard? (yes/no)");
+		        String spouseLanguage = scanner.nextLine();
+		        switch (spouseLanguage.toLowerCase()) {
+		            case "yes":
+		                totalPoints += 5;
+		                break;
+		            default:
+		                break; }
+
+		       
+		        System.out.print("Has your spouse or common-law partner completed at least 2 years of full-time study in Canada? (yes/no)");
+		        String spouseStudies = scanner.nextLine();
+		        switch (spouseStudies.toLowerCase()) {
+		            case "yes":
+		                totalPoints += 5;
+		                break;
+		            default:
+		                break;
+		        }
+
+		       
+		        System.out.println("\nHas your spouse or common-law partner done at least 1 year of full-time work in Canada? (yes/no)");
+		        String spouseWork = scanner.nextLine();
+		        switch (spouseWork.toLowerCase()) {
+		            case "yes":
+		                totalPoints += 5;
+		                break;
+		            default:
+		                break;
+		        }
+
+		        
+		        System.out.println("\nHave you completed at least 2 years of full-time study in Canada? (yes/no)");
+		        String yourStudies = scanner.nextLine();
+		        switch (yourStudies.toLowerCase()) {
+		            case "yes":
+		                totalPoints += 5;
+		                break;
+		            default:
+		                break;
+		        }
+
+		   
+		        System.out.println("\nHave you done at least 1 year of full-time work in Canada? (yes/no)");
+		        String yourWork = scanner.nextLine();
+		        switch (yourWork.toLowerCase()) {
+		            case "yes":
+		                totalPoints += 10;
+		                break;
+		            default:
+		                break;
+		        }
+
+		        System.out.println("\n-------------------------------------");
+		        System.out.println("Your total points for these factors are: " + totalPoints);
+
+		        scanner.close();
+		        return totalPoints;
+		    }
+	
 		}
-		return points;
-	}
 
 	
 
-}
+	
+
+
 
 
 
