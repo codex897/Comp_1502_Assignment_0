@@ -322,7 +322,7 @@ public class FederalSkilledWorker {
 	    return points;
 	}
 	
-	static int getAdaptibilityPts(String spouseLanguage, String spouseStudies, String spouseWork, String yourStudies,String yourWork) {		
+	static int getAdaptibilityPts(String spouseLanguage, String spouseStudies, String spouseWork, String yourStudies,String yourWork, String yourWorkFuture, String yourRelatives ) {		
 
 		        
 		        int totalPoints = 0;
@@ -378,14 +378,31 @@ public class FederalSkilledWorker {
 		            default:
 		                break;
 		        }
+		        System.out.println("\nHave you arranged employment in Canada? (yes/no)");
+		        switch (yourWorkFuture.toLowerCase()) {
+		            case "yes":
+		                totalPoints += 5;
+		                break;
+		            default:
+		                break;
+		        }
+		        System.out.println("\n does your spouse or common-law partner have qualifying relatives? (yes/no)");
+		        switch (yourRelatives.toLowerCase()) {
+		            case "yes":
+		                totalPoints += 5;
+		                break;
+		            default:
+		                break;
+		        }
 
 		        System.out.println("\n-------------------------------------");
 		        System.out.println("Your total points for these factors are: " + totalPoints);
 
 		        return totalPoints;
 		    }
+}
 	
-		}
+		
 
 	
 
