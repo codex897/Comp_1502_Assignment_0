@@ -64,46 +64,58 @@ public class FederalSkilledWorker {
 		line= bufferedreader.readLine();
 		line= bufferedreader.readLine();
 		
+		
 		//output file
 		FileWriter fileWriter = new FileWriter(FILEPATH +"output/qualified-applicants-full.txt");
 		PrintWriter outputfile = new PrintWriter(fileWriter);
+		//output simple text styling just like the example
 		outputfile.println(String.format("%-21s|%-21s|%5s|%5s", "First Name", "Last Name", "Age", "Score"));
 		outputfile.println(String.format("%-21s+%-21s+%5s+%5s", "---------------------", "---------------------", "-----", "-----"));
 		
+		
+		//while loop to read each line and extract information to find qualified applicants
 		while(line != null) {
+			int totalWorkerScore = 0;
 			
 			worker= line.split("\t");
-			System.out.println(worker[FIRST_NAME_INDEX]); //this line is temporary, just to test if it works 
-			//place getFunctions here
+			
 			// for the input for the other functions, use (worker[X_INDEX]) for example System.out.println(worker[X_INDEX]);
 			
 			totalLangPoints= getLangPts(worker[SPEAK_1_INDEX], worker[LISTEN_1_INDEX], worker[READ_1_INDEX], worker[WRITE_1_INDEX], worker[ALL_2_INDEX]);
-			System.out.println(totalLangPoints); //temporary test 
-			
-			totalAdaptPoints= getAdaptibilityPts(worker[ADAPTABILITY_SPOUSE_LANGUAGE_INDEX], worker[ADAPTABILITY_SPOUSE_EDUCATION_INDEX], worker[ADAPTABILITY_SPOUSE_WORK_INDEX], worker[ADAPTABILITY_YOU_EDUCATION_INDEX], worker[ADAPTABILITY_YOU_WORK_INDEX], worker[ADAPTABILITY_YOU_EMPLOYMENT_INDEX], worker[ADAPTABILITY_RELATIVE_INDEX]);
-			System.out.println(totalAdaptPoints); //temporary test 
-			
+			System.out.println("total language points : " + totalLangPoints); //temporary test 
 			
 			totalEducationPts = getEducationPts(worker[EDUCATION_INDEX]);
-			System.out.println(totalEducationPts);
-			
-			totalAgePts = getAgePts(worker[AGE_INDEX]);
-			System.out.println(totalAgePts);
-
+			System.out.println("Education Points: " +totalEducationPts);
 			
 			totalWorkExpPts = getWorkExpPts(worker[WORK_EXPERIENCE_INDEX]);
 			System.out.println("Work exp points: " + totalWorkExpPts);
-
+			
+			totalAgePts = getAgePts(worker[AGE_INDEX]);
+			System.out.println("AGE point: "+totalAgePts);
+			
+			
 			totalArrangedEmpPts= getArrangedEmpPts(worker[ARRANGED_EMPLOYMENT_INDEX]);
 			System.out.println("arrangedEmp points: " + totalArrangedEmpPts);
 		
-			outputfile.println(String.format("%-21s %-21s %5s", worker[FIRST_NAME_INDEX], worker[LAST_NAME_INDEX], worker[AGE_INDEX]));
+			
+			totalAdaptPoints= getAdaptibilityPts(worker[ADAPTABILITY_SPOUSE_LANGUAGE_INDEX], worker[ADAPTABILITY_SPOUSE_EDUCATION_INDEX], worker[ADAPTABILITY_SPOUSE_WORK_INDEX], worker[ADAPTABILITY_YOU_EDUCATION_INDEX], worker[ADAPTABILITY_YOU_WORK_INDEX], worker[ADAPTABILITY_YOU_EMPLOYMENT_INDEX], worker[ADAPTABILITY_RELATIVE_INDEX]);
+			System.out.println("ADAPTS POINTS: " + totalAdaptPoints); //temporary test 
 			
 			
+			
+			
+
+			
+			totalWorkerScore = totalLangPoints + totalAdaptPoints + totalEducationPts + totalAgePts + totalWorkExpPts + totalArrangedEmpPts;
+			
+			
+			if (totalWorkerScore >= 67) {
+				outputfile.println(String.format("%-21s %-21s %5s %5s", worker[FIRST_NAME_INDEX], worker[LAST_NAME_INDEX], worker[AGE_INDEX], totalWorkerScore));
+
+			}
 			line= bufferedreader.readLine();
-			
-		
 		}
+		
 		
 		bufferedreader.close();
 		outputfile.close();
@@ -124,7 +136,7 @@ public class FederalSkilledWorker {
 		
 		//speak section
 		int speakInt= Integer.parseInt(speak);
-		
+		System.out.println(speakInt);
 		if (speakInt >= CLB_9_PLUS) {
 			points += 6;
 		} else if( speakInt == CLB_8) {
@@ -135,7 +147,8 @@ public class FederalSkilledWorker {
 		
 		//listen section
 		int listenInt= Integer.parseInt(listen);
-		
+		System.out.println(listenInt);
+
 		if (listenInt >= CLB_9_PLUS) {
 			points += 6;
 		} else if( listenInt == CLB_8) {
@@ -146,7 +159,8 @@ public class FederalSkilledWorker {
 		
 		//read section
 		int readInt= Integer.parseInt(read);
-		
+		System.out.println(readInt);
+
 		if (readInt >= CLB_9_PLUS) {
 			points += 6;
 		} else if( readInt == CLB_8) {
@@ -157,7 +171,8 @@ public class FederalSkilledWorker {
 		
 		//write section
 		int writeInt= Integer.parseInt(write);
-		
+		System.out.println(writeInt);
+
 		if (writeInt >= CLB_9_PLUS) {
 			points += 6;
 		} else if( writeInt == CLB_8) {
@@ -211,16 +226,16 @@ public class FederalSkilledWorker {
 		case "Secondary school (high school diploma)":
 			points += 5;
 			break;
-		case "One-year degree, diploma or certificate":
+		case "\"One-year degree, diploma or certificate\"":
 			points += 15;
 			break;
-		case "Two-year degree, diploma or certificate":
+		case "\"Two-year degree, diploma or certificate\"":
 			points += 19;
 			break;
 		case "Bachelor's degree or other programs (three or more years)":
 			points += 21;
 			break;
-		case "Two or more certificates, diplomas, or degrees":
+		case "\"Two or more certificates, diplomas, or degrees\"":
 			points += 22;
 			break;
 		case "Professional degree needed to practice in a licensed profession":
@@ -236,6 +251,7 @@ public class FederalSkilledWorker {
 			points += 0;
 			break;
 		}
+		
 		return points;
 	}
 	
@@ -327,22 +343,25 @@ public class FederalSkilledWorker {
 		        
 		        int totalPoints = 0;
 
-		        System.out.println("--- Canadian Immigration Point Calculator ---");
-		        System.out.println("Please answer the following questions with 'yes' or 'no'.\n");
+//		        System.out.println("--- Canadian Immigration Point Calculator ---");
+//		        System.out.println("Please answer the following questions with 'yes' or 'no'.\n");
 
-		        System.out.println("Has your spouse or common-law partner achieved the minimum language standard? (yes/no)");
+//		        System.out.println("Has your spouse or common-law partner achieved the minimum language standard? (yes/no)");
 		        switch (spouseLanguage.toLowerCase()) {
 		            case "yes":
+//		            	System.out.println("T");
 		                totalPoints += 5;
 		                break;
 		            default:
 		                break; }
 
 		       
-		        System.out.print("Has your spouse or common-law partner completed at least 2 years of full-time study in Canada? (yes/no)");
+//		        System.out.print("Has your spouse or common-law partner completed at least 2 years of full-time study in Canada? (yes/no)");
 		   
 		        switch (spouseStudies.toLowerCase()) {
 		            case "yes":
+//		            	System.out.println("Tt");
+
 		                totalPoints += 5;
 		                break;
 		            default:
@@ -350,9 +369,11 @@ public class FederalSkilledWorker {
 		        }
 
 		       
-		        System.out.println("\nHas your spouse or common-law partner done at least 1 year of full-time work in Canada? (yes/no)");
+//		        System.out.println("\nHas your spouse or common-law partner done at least 1 year of full-time work in Canada? (yes/no)");
 		        switch (spouseWork.toLowerCase()) {
 		            case "yes":
+//		            	System.out.println("Tx");
+
 		                totalPoints += 5;
 		                break;
 		            default:
@@ -360,9 +381,11 @@ public class FederalSkilledWorker {
 		        }
 
 		        
-		        System.out.println("\nHave you completed at least 2 years of full-time study in Canada? (yes/no)");
+//		        System.out.println("\nHave you completed at least 2 years of full-time study in Canada? (yes/no)");
 		        switch (yourStudies.toLowerCase()) {
 		            case "yes":
+//		            	System.out.println("Tz");
+
 		                totalPoints += 5;
 		                break;
 		            default:
@@ -370,33 +393,41 @@ public class FederalSkilledWorker {
 		        }
 
 		   
-		        System.out.println("\nHave you done at least 1 year of full-time work in Canada? (yes/no)");
+//		        System.out.println("\nHave you done at least 1 year of full-time work in Canada? (yes/no)");
 		        switch (yourWork.toLowerCase()) {
 		            case "yes":
+//		            	System.out.println("Ta");
+
 		                totalPoints += 10;
 		                break;
 		            default:
 		                break;
 		        }
-		        System.out.println("\nHave you arranged employment in Canada? (yes/no)");
+//		        System.out.println("\nHave you arranged employment in Canada? (yes/no)");
 		        switch (yourWorkFuture.toLowerCase()) {
 		            case "yes":
+		            	
+//		            	System.out.println("Tw");
+
 		                totalPoints += 5;
 		                break;
 		            default:
 		                break;
 		        }
-		        System.out.println("\n does your spouse or common-law partner have qualifying relatives? (yes/no)");
+		        System.out.println(yourWorkFuture);
+//		        System.out.println("\n does your spouse or common-law partner have qualifying relatives? (yes/no)");
 		        switch (yourRelatives.toLowerCase()) {
 		            case "yes":
+//		            	System.out.println("Tq");
+
 		                totalPoints += 5;
 		                break;
 		            default:
 		                break;
 		        }
 
-		        System.out.println("\n-------------------------------------");
-		        System.out.println("Your total points for these factors are: " + totalPoints);
+//		        System.out.println("\n-------------------------------------");
+//		        System.out.println("Your total points for these factors are: " + totalPoints);
 
 		        return totalPoints;
 		    }
