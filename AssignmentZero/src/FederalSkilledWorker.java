@@ -30,13 +30,19 @@ public class FederalSkilledWorker {
 	
 	static final int ADAPTABILITY_RELATIVE_INDEX = 18;
 	
-	static final String FILEPATH = ("dataTextFile/");  
+	static final int CLB_9_PLUS = 9;
+	static final int CLB_8 = 8;
+	static final int CLB_7 = 7;
+	
+	static final String FILEPATH_INPUT = ("data/input/");  
+	static final String FILEPATH_OUTPUT = ("data/output/");  
 	
 	public static void main(String[] args) throws IOException {
 		
 		
 
-		String fileName;
+		String fileNameInput;
+		String fileNameOutput;
 		String line;
 		String[] worker;
 		
@@ -46,6 +52,7 @@ public class FederalSkilledWorker {
 		int totalArrangedEmpPts;
 		int totalAgePts;
 		int totalAdaptPoints;
+		int totalQualifiedWorkers = 0;
 		
 		Scanner keyboard= new Scanner(System.in);
 		
@@ -53,10 +60,10 @@ public class FederalSkilledWorker {
 
 		//For reading file//
 		
-		System.out.println("What is your file name: ");
-		fileName = keyboard.nextLine();
+		System.out.print("Please provide the name of the Input file (to be located in data/input/: ");
+		fileNameInput = keyboard.nextLine();
 		
-		File file= new File( FILEPATH + fileName );
+		File file= new File( FILEPATH_INPUT + fileNameInput );
 		FileReader filereader= new FileReader(file);
 		BufferedReader bufferedreader= new BufferedReader(filereader);
 		
@@ -66,7 +73,10 @@ public class FederalSkilledWorker {
 		
 		
 		//output file
-		FileWriter fileWriter = new FileWriter(FILEPATH +"output/qualified-applicants-full.txt");
+		System.out.print("Please provide the name of the Input file (to be located in data/output/: ");
+		fileNameOutput = keyboard.nextLine();
+		
+		FileWriter fileWriter = new FileWriter(FILEPATH_OUTPUT +"qualified-applicants-full.txt");
 		PrintWriter outputfile = new PrintWriter(fileWriter);
 		//output simple text styling just like the example
 		outputfile.println(String.format("%-21s|%-21s|%5s|%5s", "First Name", "Last Name", "Age", "Score"));
@@ -82,53 +92,34 @@ public class FederalSkilledWorker {
 			// for the input for the other functions, use (worker[X_INDEX]) for example System.out.println(worker[X_INDEX]);
 			
 			totalLangPoints= getLangPts(worker[SPEAK_1_INDEX], worker[LISTEN_1_INDEX], worker[READ_1_INDEX], worker[WRITE_1_INDEX], worker[ALL_2_INDEX]);
-			System.out.println("total language points : " + totalLangPoints); //temporary test 
-			
 			totalEducationPts = getEducationPts(worker[EDUCATION_INDEX]);
-			System.out.println("Education Points: " +totalEducationPts);
-			
-			totalWorkExpPts = getWorkExpPts(worker[WORK_EXPERIENCE_INDEX]);
-			System.out.println("Work exp points: " + totalWorkExpPts);
-			
+			totalWorkExpPts = getWorkExpPts(worker[WORK_EXPERIENCE_INDEX]);			
 			totalAgePts = getAgePts(worker[AGE_INDEX]);
-			System.out.println("AGE point: "+totalAgePts);
-			
-			
 			totalArrangedEmpPts= getArrangedEmpPts(worker[ARRANGED_EMPLOYMENT_INDEX]);
-			System.out.println("arrangedEmp points: " + totalArrangedEmpPts);
-		
-			
 			totalAdaptPoints= getAdaptibilityPts(worker[ADAPTABILITY_SPOUSE_LANGUAGE_INDEX], worker[ADAPTABILITY_SPOUSE_EDUCATION_INDEX], worker[ADAPTABILITY_SPOUSE_WORK_INDEX], worker[ADAPTABILITY_YOU_EDUCATION_INDEX], worker[ADAPTABILITY_YOU_WORK_INDEX], worker[ADAPTABILITY_YOU_EMPLOYMENT_INDEX], worker[ADAPTABILITY_RELATIVE_INDEX]);
-			System.out.println("ADAPTS POINTS: " + totalAdaptPoints); //temporary test 
 			
-			
-			
-			
-
-			
+			//add up the total and if 67 or above add to output file
 			totalWorkerScore = totalLangPoints + totalAdaptPoints + totalEducationPts + totalAgePts + totalWorkExpPts + totalArrangedEmpPts;
 			
-			
 			if (totalWorkerScore >= 67) {
+				totalQualifiedWorkers ++;
 				outputfile.println(String.format("%-21s %-21s %5s %5s", worker[FIRST_NAME_INDEX], worker[LAST_NAME_INDEX], worker[AGE_INDEX], totalWorkerScore));
-
 			}
+			
+			
 			line= bufferedreader.readLine();
 		}
 		
-		
+	
 		bufferedreader.close();
 		outputfile.close();
-	
 		
-		
-		
+		// message to state how many workers were qualified
+		System.out.println("\nThere were " + totalQualifiedWorkers + " qualified applicants");
 	}
 	
-	//IDK if these variable are needed but if it is then will put on top probably
-	static final int CLB_9_PLUS = 9;
-	static final int CLB_8 = 8;
-	static final int CLB_7 = 7;
+
+	//functions for the main method starts here
 	
 	static int getLangPts(String speak, String listen, String read, String write, String all) {
 		
@@ -136,7 +127,7 @@ public class FederalSkilledWorker {
 		
 		//speak section
 		int speakInt= Integer.parseInt(speak);
-		System.out.println(speakInt);
+		
 		if (speakInt >= CLB_9_PLUS) {
 			points += 6;
 		} else if( speakInt == CLB_8) {
@@ -147,8 +138,7 @@ public class FederalSkilledWorker {
 		
 		//listen section
 		int listenInt= Integer.parseInt(listen);
-		System.out.println(listenInt);
-
+		
 		if (listenInt >= CLB_9_PLUS) {
 			points += 6;
 		} else if( listenInt == CLB_8) {
@@ -159,7 +149,6 @@ public class FederalSkilledWorker {
 		
 		//read section
 		int readInt= Integer.parseInt(read);
-		System.out.println(readInt);
 
 		if (readInt >= CLB_9_PLUS) {
 			points += 6;
@@ -171,7 +160,6 @@ public class FederalSkilledWorker {
 		
 		//write section
 		int writeInt= Integer.parseInt(write);
-		System.out.println(writeInt);
 
 		if (writeInt >= CLB_9_PLUS) {
 			points += 6;
@@ -181,79 +169,66 @@ public class FederalSkilledWorker {
 			points += 4;
 		}
 		
-		//second language section
-		//https://www.w3schools.com/java/ref_string_equals.asp 
-		System.out.println(all);
-		if (all.equals("yes")) {
-			points += 4;
-		} else if( all.equals("no")) {
-			points += 0;
+		//second language section		
+		switch(all) {
+			case "yes":
+				points += 4;
+				break;
+			default:
+				points += 0;
+				break;
 		}
 		
 		return points;
 	}
-	
-//	static int getEducationPts(String education) {
-//		System.out.println(education);
-//		
-//		int points = 0;
-//		if (education.equals("Secondary school (high school diploma)")) {
-//			points += 5;
-//		} else if(education.equals("One-year degree, diploma or certificate")) {
-//			points += 15;
-//		} else if(education.equals("Two-year degree, diploma or certificate")) {
-//			points += 19;
-//		} else if(education.equals("Bachelor's degree or other programs (three or more years)")) {
-//			points += 21;
-//		} else if(education.equals("Two or more certificates, diplomas, or degrees")) {
-//			points += 22;
-//		} else if(education.equals("Professional degree needed to practice in a licensed profession")) {
-//			points += 23;
-//		} else if(education.equals("University degree at the Master's level")) {
-//			points += 23;
-//		} else if(education.equals("University degree at the Doctoral (PhD) level")) {
-//			points += 25;
-//		} 
-//			
-//		return points;
-//		
-//	}
+
 	
 	static int getEducationPts(String education) {
-		System.out.println(education);
+		
 		int points = 0;
+		
 		switch(education) {
-		case "Secondary school (high school diploma)":
-			points += 5;
-			break;
-		case "\"One-year degree, diploma or certificate\"":
-			points += 15;
-			break;
-		case "\"Two-year degree, diploma or certificate\"":
-			points += 19;
-			break;
-		case "Bachelor's degree or other programs (three or more years)":
-			points += 21;
-			break;
-		case "\"Two or more certificates, diplomas, or degrees\"":
-			points += 22;
-			break;
-		case "Professional degree needed to practice in a licensed profession":
-			points += 23;
-			break;
-		case "University degree at the Master's level":
-			points += 23;
-			break;
-		case "University degree at the Doctoral (PhD) level":
-			points += 25;
-			break;
-		default:
-			points += 0;
-			break;
+			case "Secondary school (high school diploma)":
+				points += 5;
+				break;
+			case "\"One-year degree, diploma or certificate\"":
+				points += 15;
+				break;
+			case "One-year degree, diploma or certificate":
+				points += 15;
+				break;
+			case "\"Two-year degree, diploma or certificate\"":
+				points += 19;
+				break;
+			case "Two-year degree, diploma or certificate":
+				points += 19;
+				break;
+			case "Bachelor's degree or other programs (three or more years)":
+				points += 21;
+				break;
+			case "\"Two or more certificates, diplomas, or degrees\"":
+				points += 22;
+				break;
+			case "Two or more certificates, diplomas, or degrees":
+				points += 22;
+				break;
+			case "Professional degree needed to practice in a licensed profession":
+				points += 23;
+				break;
+			case "University degree at the Master's level":
+				points += 23;
+				break;
+			case "University degree at the Doctoral (PhD) level":
+				points += 25;
+				break;
+			default:
+				points += 0;
+				break;
 		}
 		
 		return points;
 	}
+	
 	
 	static int getWorkExpPts(String workExpYears) {
 		int points = 0;
@@ -277,17 +252,7 @@ public class FederalSkilledWorker {
 		return points;
 	}
 	
-//	static int getArrangedEmpPts(String YesNoArrangedEmp) {
-//		int points = 0;
-//		
-//		if (YesNoArrangedEmp.equals("yes")) {
-//			points += 10;
-//		} else {
-//			points += 0;
-//		}
-//		return points;
-//	}
-	
+
 	static int getArrangedEmpPts(String yesNoArrangedEmp) {
 		int points = 0;
 		switch(yesNoArrangedEmp) {
@@ -338,99 +303,79 @@ public class FederalSkilledWorker {
 	    return points;
 	}
 	
+	
 	static int getAdaptibilityPts(String spouseLanguage, String spouseStudies, String spouseWork, String yourStudies,String yourWork, String yourWorkFuture, String yourRelatives ) {		
 
-		        
-		        int totalPoints = 0;
+		int totalPoints = 0;
 
-//		        System.out.println("--- Canadian Immigration Point Calculator ---");
-//		        System.out.println("Please answer the following questions with 'yes' or 'no'.\n");
-
-//		        System.out.println("Has your spouse or common-law partner achieved the minimum language standard? (yes/no)");
-		        switch (spouseLanguage.toLowerCase()) {
-		            case "yes":
-//		            	System.out.println("T");
-		                totalPoints += 5;
-		                break;
-		            default:
-		                break; }
-
-		       
-//		        System.out.print("Has your spouse or common-law partner completed at least 2 years of full-time study in Canada? (yes/no)");
+		switch (spouseLanguage.toLowerCase()) {
+			case "yes":
+				totalPoints += 5;
+				break;
+			default:
+				break; 
+		}
 		   
-		        switch (spouseStudies.toLowerCase()) {
-		            case "yes":
-//		            	System.out.println("Tt");
+		switch (spouseStudies.toLowerCase()) {
+			case "yes":
+				totalPoints += 5;
+				break;
+			default:
+				break;
+		}
 
-		                totalPoints += 5;
-		                break;
-		            default:
-		                break;
-		        }
+		switch (spouseWork.toLowerCase()) {
+			case "yes":
+				totalPoints += 5;
+				break;
+			default:
+				break;
+		}
 
-		       
-//		        System.out.println("\nHas your spouse or common-law partner done at least 1 year of full-time work in Canada? (yes/no)");
-		        switch (spouseWork.toLowerCase()) {
-		            case "yes":
-//		            	System.out.println("Tx");
+		switch (yourStudies.toLowerCase()) {
+			case "yes":
+				totalPoints += 5;
+				break;
+			default:
+				break;
+		}
+   
+		switch (yourWork.toLowerCase()) {
+			case "yes":
+				totalPoints += 10;
+				break;
+			default:
+				break;
+		}
+		
+		switch (yourWorkFuture.toLowerCase()) {
+			case "yes":
+				totalPoints += 5;
+				break;
+			default:
+				break;
+		}
 
-		                totalPoints += 5;
-		                break;
-		            default:
-		                break;
-		        }
+		switch (yourRelatives.toLowerCase()) {
+			case "yes":
+				totalPoints += 5;
+				break;
+			default:
+				break;
+		}
 
-		        
-//		        System.out.println("\nHave you completed at least 2 years of full-time study in Canada? (yes/no)");
-		        switch (yourStudies.toLowerCase()) {
-		            case "yes":
-//		            	System.out.println("Tz");
-
-		                totalPoints += 5;
-		                break;
-		            default:
-		                break;
-		        }
-
-		   
-//		        System.out.println("\nHave you done at least 1 year of full-time work in Canada? (yes/no)");
-		        switch (yourWork.toLowerCase()) {
-		            case "yes":
-//		            	System.out.println("Ta");
-
-		                totalPoints += 10;
-		                break;
-		            default:
-		                break;
-		        }
-//		        System.out.println("\nHave you arranged employment in Canada? (yes/no)");
-		        switch (yourWorkFuture.toLowerCase()) {
-		            case "yes":
-		            	
-//		            	System.out.println("Tw");
-
-		                totalPoints += 5;
-		                break;
-		            default:
-		                break;
-		        }
-		        System.out.println(yourWorkFuture);
-//		        System.out.println("\n does your spouse or common-law partner have qualifying relatives? (yes/no)");
-		        switch (yourRelatives.toLowerCase()) {
-		            case "yes":
-//		            	System.out.println("Tq");
-
-		                totalPoints += 5;
-		                break;
-		            default:
-		                break;
-		        }
-
-//		        System.out.println("\n-------------------------------------");
-//		        System.out.println("Your total points for these factors are: " + totalPoints);
-
+			if (totalPoints > 10) {
+				totalPoints = 10;
+			}
 		        return totalPoints;
-		    }
+	}
+	
+	
+	
+	
+	
+	
+	
 }
 	
 		
